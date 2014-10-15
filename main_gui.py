@@ -54,7 +54,7 @@ class GuiYoutube(Gtk.Window) :
 		label_format = Gtk.Label("Format : ")
 		self.combo = Gtk.ComboBoxText()  # Insertion d'un ComboText
 		self.combo.insert(0,"0","mp4")  # Choix MP4
-		self.combo.insert(1,"1","flv")  # Choix MP3
+		self.combo.insert(1,"1","flv")  # Choix FLV
 		table.attach(label_format,0,1,2,3)
 		table.attach(self.combo,1,2,2,3)
 
