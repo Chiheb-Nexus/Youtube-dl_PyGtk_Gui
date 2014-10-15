@@ -12,7 +12,7 @@ class GuiYoutube(Gtk.Window) :
 		Gtk.Window.__init__(self,title="Youtube-dl PyGtk Gui")
 		# Taille de la fenêtre par défaut
 		self.set_default_size(500,500)
-		self.set_icon_from_file("icon.png")
+		self.set_icon_from_file("icon.PNG")
 		action_group = Gtk.ActionGroup("Mes actions")
 		# Nos 2 menus à déclarer
 		self.add_fichier_menu_actions(action_group)
