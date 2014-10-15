@@ -294,7 +294,7 @@ class DialogQuit(Gtk.Dialog) :
 		
 		
 		
-##### progremme test #####
+##### programme test #####
 if __name__ == '__main__' :
 	win = GuiYoutube()
 	win.connect("delete-event",Gtk.main_quit)
