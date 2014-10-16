@@ -251,7 +251,7 @@ class GuiYoutube(Gtk.Window) :
 		about.set_website("http://www.nexus-coding.blogspot.com")
 		author = ["Chiheb Nexus http://www.nexus-coding.blogspot.com"]
 		image = GdkPixbuf.Pixbuf.new_from_file("logo.png")
-		about.set_icon_from_file("icon.png")
+		about.set_icon_from_file("icon.PNG")
 		about.set_logo(image)
 		about.set_authors(author)
 		about.set_license(" \
