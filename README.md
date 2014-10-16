@@ -1,4 +1,4 @@
-"Youtube-dl PyGtk Gui" est une interface graphique du célèbre youtube-dl qui fonctionne avec la version PyGtk3 et les versions supérieures.
+"Youtube-dl PyGtk Gui" est une interface graphique du célèbre youtube-dl qui fonctionne avec la version (PyGObject) PyGtk3 et les versions supérieures.
 
 ________________________________________________________________________________________________ 
 
@@ -20,5 +20,5 @@ ________________________________________________________________________________
 
 Youtube-dl Pygtk Gui est en cours d'évolution. 
 Pour le moment il gère seulement les extensions vidéos "mp4" et "flv".
-Nous travaillons à le faire évoluer dans les prochaines versions.
+Nous travaillons de le faire évoluer dans les prochaines versions.
 Cordialement.
