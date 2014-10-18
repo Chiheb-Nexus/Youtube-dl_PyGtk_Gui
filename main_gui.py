@@ -1,22 +1,44 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-##### Main Gui #####
+#
+#  Youtube-dl PyGtk Gui
+#  
+#  Copyright 2014 Chiheb Nexus
+#  
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#  
+################################################################################ 
+############################ Main Gui ##########################################
+
 import os,signal
 from gi.repository import Gtk,GLib,GdkPixbuf
 
 class GuiYoutube(Gtk.Window) :
-	" Classe principale de la Gui Youtube # À modifier chaque fois"
+	" Classe principale de la Gui Youtube"
 	def __init__(self) : 
 		# Constructeur de Gtk.Window pour avoir tous ses options
 
 		Gtk.Window.__init__(self,title="Youtube-dl PyGtk Gui")
 		# Taille de la fenêtre par défaut
 		self.set_default_size(500,500)
-		self.set_icon_from_file("icon.PNG")
+		self.set_icon_from_file("icon.png")
 		action_group = Gtk.ActionGroup("Mes actions")
 		# Nos 2 menus à déclarer
 		self.add_fichier_menu_actions(action_group)
 		self.add_aide_menu_actions(action_group)
+		self.pid = 0
 		
 
 		self.ui_file = os.getcwd() +"/gui_menu.xml"
@@ -43,18 +65,29 @@ class GuiYoutube(Gtk.Window) :
 		self.entree.set_text("http://www.youtube.com/EXEMPLE")
 		table.attach(self.entree,0,2,1,2)
 		
-		
-		
-		# Horizontale boxe
-		
-		
-		
 		# Label du format
 		
 		label_format = Gtk.Label("Format : ")
 		self.combo = Gtk.ComboBoxText()  # Insertion d'un ComboText
-		self.combo.insert(0,"0","mp4")  # Choix MP4
-		self.combo.insert(1,"1","flv")  # Choix FLV
+		self.combo.insert(0,"171","WEBM [Audio Basse Qualité]") 
+		self.combo.insert(1,"140","M4A [Audio]")  
+		self.combo.insert(2,"160","MP4 [Vidéo 144p]")
+		self.combo.insert(3,"242","WEBM [Vidéo 240p]")
+		self.combo.insert(4,"133","MP4 [Vidéo 240p]")
+		self.combo.insert(5,"243","WEBM [Vidéo 360p]")
+		self.combo.insert(6,"134","MP4 [Vidéo 360p]")
+		self.combo.insert(7,"244","WEBM [Vidéo 480p]")
+		self.combo.insert(8,"135","MP4 [Vidéo 480p]")
+		self.combo.insert(9,"247","WEBM [Vidéo 720p]")
+		self.combo.insert(10,"136","MP4 [Vidéo 720p]")
+		self.combo.insert(11,"248","WEBM [Vidéo 1080p]")
+		self.combo.insert(12,"137","MP4 [Vidéo 1080p]")
+		self.combo.insert(13,"17","3GP [Vidéo 176x144]")
+		self.combo.insert(14,"36","3GP [Vidéo 320x240]")
+		self.combo.insert(15,"5","FLV [Vidéo 400x240]")
+		self.combo.insert(16,"43","WEBM [Vidéo 640x360]")
+		self.combo.insert(17,"18","MP4 [Vidéo 640x360]")
+		self.combo.insert(18,"22","MP4 [Vidéo 1280x720 Meilleure Qualité]")
 		table.attach(label_format,0,1,2,3)
 		table.attach(self.combo,1,2,2,3)
 
@@ -74,16 +107,16 @@ class GuiYoutube(Gtk.Window) :
 		# Boutton du téléchargement
 		
 		self.telecharger = Gtk.Button(label="Télécharger")
-		self.telecharger.connect("clicked",self.process)
+		self.telecharger.connect("clicked",self.test_format)
 		table.attach(self.telecharger,0,1,4,5)
 		
 		
 		
 		# Boutton pour stopper le téléchargement
 		
-		quit = Gtk.Button(label="Stopper")
-		quit.connect("clicked",self.kill)  # Méthode Kill tue le processus
-		table.attach(quit,1,2,4,5)
+		quite = Gtk.Button(label="Stopper")
+		quite.connect("clicked",self.kill)  # Méthode Kill tue le processus
+		table.attach(quite,1,2,4,5)
 		vbox.pack_start(table,True,True,0)
 		
 		
@@ -97,10 +130,10 @@ class GuiYoutube(Gtk.Window) :
 		# TextView pour afficher les erreurs
 		self.tw_err = Gtk.TextView()
 		# ScroledWindow pour afficher les erreurs
-		sw = Gtk.ScrolledWindow()
-		vbox.pack_start(sw,True,True,0)
+		
+		
 		# Ajouter ScrolledWindow à TextView
-		sw.add(self.tw_err)
+		
 		# Création d'un ProgressBar
 		self.progress = Gtk.ProgressBar()
 		vbox.pack_start(self.progress,False,True,0)
@@ -114,25 +147,29 @@ class GuiYoutube(Gtk.Window) :
 	
     # Mettre à jour la progression de ProgressBar
 	def update_progress(self,data=None):
+		"Mettre à jour la barre de progression"
 		self.progress.pulse()
 		return True  # Retourner Vrai
     # Tuer le processus en cours d'éexcution
-    # C'est valide pour Linux
-    # À tester pour Windows
+    # C'est valide sur Linux
+    # À tester sur Windows
 	def kill(self,widget,data=None):
-		os.kill(self.pid,signal.SIGTERM)
+		"Tuer le processus en cours"
+		if self.pid !=0 :
+			os.kill(self.pid,signal.SIGTERM)
+			self.pid =0
     # Processus principal du téléchargement
 	def process(self,widget,data=None):
+		"Méthode de téléchargement"
 		# changer le chemin de répertoire
 		chemin = self.label_destination.get_text()
-		print(chemin)
 		os.chdir(chemin)
 		# Pour l'instant on a besoin de 2 paramètres
 		# Url et Format
 		url = self.entree.get_text()
-		format = self.combo.get_active_text()
+		formats = self.combo.get_active_id()
 		# On utlisera youtube-dl pour télécharger la vidéo
-		params = ['youtube-dl','-f',format, url]
+		params = ['youtube-dl','-f',formats, url]
 
 		def scroll_to_end(textview):
 			i = textview.props.buffer.get_end_iter()
@@ -140,38 +177,41 @@ class GuiYoutube(Gtk.Window) :
 			textview.props.buffer.place_cursor(i)
 			textview.scroll_to_mark(mark, 0.0, True, 0.0, 1.0)
 		def write_to_textview(io, condition, tw):
-			if condition is GLib.IO_HUP:
-				GLib.source_remove(self.source_id_out)
-				GLib.source_remove(self.source_id_err)
+			if condition is GLib.IO_HUP:   # GLib.IO_HUP = Hang UP 
+				GLib.source_remove(self.source_id_out)  # Enlever self.source_id_out de la boucle principale
+				GLib.source_remove(self.source_id_err)  # Enlever self.source_id_err de la boucle principale
 				return False
-			line = io.readline()
-			tw.props.buffer.insert_at_cursor(line)
-			scroll_to_end(tw)
-			while Gtk.events_pending():
-				Gtk.main_iteration_do(False)
+			line = io.readline()                        # Lire le contenu de io
+			tw.props.buffer.insert_at_cursor(line)      # Mettre le contenu de io dans le buffer du TextView (tw)
+			scroll_to_end(tw)                           # Le TextView a une barre de défilement
+			while Gtk.events_pending():        # Chercher s'il y a un évènement en attente
+				Gtk.main_iteration_do(False)   # Bloquer l'itération du programme = False 
 			return True
 		self.pid, stdin, stdout, stderr = GLib.spawn_async(params,\
 			flags=GLib.SpawnFlags.SEARCH_PATH|GLib.SpawnFlags.DO_NOT_REAP_CHILD,\
 			standard_output=True,\
-			standard_error=True)
-		
-		io = GLib.IOChannel(stdout)
-		err = GLib.IOChannel(stderr)
+			standard_error=True)    
+		      
+		      
+		io = GLib.IOChannel(stdout) # Création d'une variable qui stock les informations du socket de retour
+		err = GLib.IOChannel(stderr) # Création d'une variable qui stock les informations du socket d'erreur
 		self.source_id_out = io.add_watch(GLib.IO_IN|GLib.IO_HUP,\
+			write_to_textview,self.tw_out,priority=GLib.PRIORITY_HIGH)   
+			                                   
+		self.source_id_err = err.add_watch(GLib.IO_IN|GLib.IO_HUP,\
 			write_to_textview,\
 			self.tw_out,\
 			priority=GLib.PRIORITY_HIGH)
-		self.source_id_err = err.add_watch(GLib.IO_IN|GLib.IO_HUP,\
-			write_to_textview,\
-			self.tw_err,\
-			priority=GLib.PRIORITY_HIGH)
-		timeout_id = GLib.timeout_add(100, self.update_progress)
+		timeout_id = GLib.timeout_add(100, self.update_progress) # Mettre à jour la ProgressBar
 
 		def closure_func(pid, status, data):
-			GLib.spawn_close_pid(pid)
-			GLib.source_remove(timeout_id)
-			self.progress.set_fraction(0.0)
-		GLib.child_watch_add(self.pid, closure_func, None)
+			GLib.spawn_close_pid(pid)     # Faut fermer GLib.spawn_asyn avec GLib.spawn_close_pid()
+			GLib.source_remove(timeout_id) # Enlever timeout_id de la boucle principale
+			self.progress.set_fraction(0.0) # retourner le barre de progression à son état initial
+			self.pid = 0
+		GLib.child_watch_add(self.pid, closure_func, None) # GLib.child_watch_add(pid, function, data=None,
+		
+                                                                
 			
 			
 	def choix_destination (self,widget) :
@@ -196,7 +236,7 @@ class GuiYoutube(Gtk.Window) :
 		
 		
 	def quitter (self,widget) : 
-		
+		"Méthode qui affiche une fenêtre de dialog si on quitte le programme"
 		dialog = DialogQuit(self)
 		response = dialog.run()
 		
@@ -222,7 +262,6 @@ class GuiYoutube(Gtk.Window) :
 		
 	def add_aide_menu_actions (self,action_group) :
 		"""Ajouter le menu "Aide" et ses sous-menus  """
-		# Ne pas oublier de déclarer la fonction propos et plus
 		action_aidemenu = Gtk.Action("AideMenu","Aide",None,None)
 		action_group.add_action(action_aidemenu)
 		action_aidepropos = Gtk.Action("AideApropos","À propos",None,None,self.propos)
@@ -236,7 +275,7 @@ class GuiYoutube(Gtk.Window) :
 	def create_ui_manager (self) : 
 		" Création de ui_manager "
 		uimanager = Gtk.UIManager()
-		uimanager.add_ui_from_file(self.ui_file)  # À déclarer
+		uimanager.add_ui_from_file(self.ui_file)  
 
 		return uimanager
 		
@@ -245,13 +284,13 @@ class GuiYoutube(Gtk.Window) :
 		" à propos"
 		about = Gtk.AboutDialog()
 		about.set_program_name("Youtube-dl PyGtk")
-		about.set_version("<b>Version :</b> 0.0.1")
+		about.set_version("<b>Version :</b> 0.0.2")
 		about.set_copyright("Chiheb NeXus© - 2014")
-		about.set_comments("Ce programme est une interface graphique crée avec PyGtk3+ basée sur le programme Youtube-dl")
+		about.set_comments("Ce programme est une interface graphique crée avec PyGtk3+ basée sur Youtube-dl")
 		about.set_website("http://www.nexus-coding.blogspot.com")
 		author = ["Chiheb Nexus http://www.nexus-coding.blogspot.com"]
 		image = GdkPixbuf.Pixbuf.new_from_file("logo.png")
-		about.set_icon_from_file("icon.PNG")
+		about.set_icon_from_file("icon.png")
 		about.set_logo(image)
 		about.set_authors(author)
 		about.set_license(" \
@@ -275,9 +314,24 @@ class GuiYoutube(Gtk.Window) :
 		"Pour plus d'informations"
 		info = Gtk.MessageDialog(self,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,\
                                          "Pour réporter un Bug ou pour plus d'informations :")
-		info.format_secondary_text(" Veuillez visiter mon blog : http://www.nexus-coding.blogspot.com")
+		info.format_secondary_text(" Veuillez visiter Github : https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui")
 		info.run()
 		info.destroy()
+		
+	def info_user(self,widget) : 
+		"Notification de choisir un format valide"
+		info = Gtk.MessageDialog(self,0,Gtk.MessageType.INFO,Gtk.ButtonsType.OK,\
+                                         "Veuillez entrer un format vidéo valide")
+		info.run()
+		info.destroy()
+	
+	def test_format(self,widget) :
+		" Tester la format entrée"
+		f = self.combo.get_active_id()
+		if f == None :
+			self.info_user(self)
+		else : 
+			self.process(self)
 		
 	
 		
@@ -291,10 +345,10 @@ class DialogQuit(Gtk.Dialog) :
 		box = self.get_content_area()
 		box.add(label)
 		self.show_all()
+
 		
 		
-		
-##### programme test #####
+##### progremme test #####
 if __name__ == '__main__' :
 	win = GuiYoutube()
 	win.connect("delete-event",Gtk.main_quit)
