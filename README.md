@@ -48,3 +48,5 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
 
 #Bugs 
 Veuillez notez les bugs sur https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui
+
+![alt tag](http://3.bp.blogspot.com/-eXBszyH2_Ms/VEG5tPb3ovI/AAAAAAAAAoU/CEQDR3BtDG0/s1600/S%C3%A9lection_002.png)
