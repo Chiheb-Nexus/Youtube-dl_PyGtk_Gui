@@ -56,12 +56,12 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
    * Traduction de la Gui en anglais
    
 #TODO :
-   []  Ajout des options d'authentification
-   []  Ajout des options de sous-titrage (subtitles)
-   []  Lister toutes les formats disponible de la vidéo à télécharger
-   []  Afficher la version de youtube-dl installée
-   []  Ajouter l'option de mettre à jour youtube-dl
-   []  Choix de la langue de l'interface dès son exécution 
+   - [ ]  Ajout des options d'authentification
+   - [ ]  Ajout des options de sous-titrage (subtitles)
+   - [ ]  Lister toutes les formats disponible de la vidéo à télécharger
+   - [ ]  Afficher la version de youtube-dl installée
+   - [ ]  Ajouter l'option de mettre à jour youtube-dl
+   - [ ]  Choix de la langue de l'interface dès son exécution 
 
 #Bugs 
 Veuillez notez les bugs sur https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui
