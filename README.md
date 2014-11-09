@@ -1,7 +1,8 @@
 **Youtube-dl PyGtk Gui** est une interface graphique du célèbre youtube-dl qui fonctionne avec la version PyGtk3 et les versions supérieures.
 
 #Installation 
-Pour lancer le programme, tapez sur vos console : ~# python3 main_gui.py 
+Pour lancer le programme, tapez sur vos console : 
+                              ~$ python3 main_gui.py 
 
 Avant l'exécution de "Youtube-dl PyGtk Gui" Veuillez installer youtube-dl sur votre ordinateur : 
 
@@ -10,6 +11,7 @@ Avant l'exécution de "Youtube-dl PyGtk Gui" Veuillez installer youtube-dl sur v
             ~$ sudo apt-get install youtube-dl
 
  - Installation manuelle : 
+ 
                            ~$ sudo curl https://yt-dl.org/downloads/2014.10.15/youtube-dl -o /usr/local/bin/youtube-dl
 
                            ~$ sudo chmod a+x /usr/local/bin/youtube-dl
@@ -45,8 +47,23 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
        - Une seule zone d'affichage du traitement lors du téléchargement
        - Ajout de deux fenêtres de dialogues en cas de mauvaise manipulation du logiciel
        - Ajout de la repository GitHub
+       
+**09/11/2014** 
+**Update** :
+   * Optimisation du code source
+   * Fenêtre de taille fixe
+   * VBox homogène
+   * Traduction de la Gui en anglais
+   
+#TODO :
+   [ ] - Ajout des options d'authentification
+   [ ] - Ajout des options de sous-titrage (subtitles)
+   [ ] - Lister toutes les formats disponible de la vidéo à télécharger
+   [ ] - Afficher la version de youtube-dl installée
+   [ ] - Ajouter l'option de mettre à jour youtube-dl
+   [ ] - Choix de la langue de l'interface dès son exécution 
 
 #Bugs 
 Veuillez notez les bugs sur https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui
 
-![alt tag](http://3.bp.blogspot.com/-eXBszyH2_Ms/VEG5tPb3ovI/AAAAAAAAAoU/CEQDR3BtDG0/s1600/S%C3%A9lection_002.png)
+![alt tag](http://1.bp.blogspot.com/-xaSIzhFyk3I/VF-iIVwV_vI/AAAAAAAAAwU/v2m2DDbO6XQ/s1600/S%C3%A9lection_002.png)
