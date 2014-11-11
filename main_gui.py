@@ -24,6 +24,7 @@
 
 import os
 import signal
+from langue_gui import *
 from gi.repository import Gtk, GLib, GdkPixbuf, Gdk
 
 
@@ -33,15 +34,22 @@ class GuiYoutube(Gtk.Window):
     """
 
     def __init__(self):
-
         """
         Initial Window
         """
         Gtk.Window.__init__(self, title="Youtube-dl PyGtk Gui")
+        # Choose Gui Language
+        LangueGui()
+        self.l_ui = LangueGui.status
+        GuiYoutube.l_ui = LangueGui.status
+        if self.l_ui =="" : 
+            self.l_ui = ui_an
+            GuiYoutube.l_ui = ui_an
 
         self.set_resizable(False)
         self.set_size_request(360, 500)
         #self.set_default_size(500, 500)
+        self.set_position(Gtk.WindowPosition.CENTER)
         self.set_icon_from_file("images/icon.png")
         action_group = Gtk.ActionGroup("Mes actions")
 
@@ -60,62 +68,77 @@ class GuiYoutube(Gtk.Window):
 
         table = Gtk.Table(2, 2, True)
 
-        label = Gtk.Label()
-        label.set_text("Enter Youtube video URL")
-        table.attach(label, 0, 2, 0, 1)
+        self.label = Gtk.Label()
+        self.label.set_text(self.l_ui[0])
+        table.attach(self.label, 0, 2, 0, 1)
 
         self.entree = Gtk.Entry()
-        self.entree.set_text("http://www.youtube.com/Put_Your_Video")
+        self.entree.set_text(self.l_ui[1])
         table.attach(self.entree, 0, 2, 1, 2)
 
         label_format = Gtk.Label("Format : ")
         self.combo = Gtk.ComboBoxText()
-        self.combo.insert(0, "171", "WEBM [Audio Bad Quality]")
+        self.combo.insert(0, "171", "WEBM [Audio  "+self.l_ui[3]+" "+self.l_ui[5]+"]")
         self.combo.insert(1, "140", "M4A [Audio]")
-        self.combo.insert(2, "160", "MP4 [Video 144p]")
-        self.combo.insert(3, "242", "WEBM [Video 240p]")
-        self.combo.insert(4, "133", "MP4 [Video 240p]")
-        self.combo.insert(5, "243", "WEBM [Video 360p]")
-        self.combo.insert(6, "134", "MP4 [Video 360p]")
-        self.combo.insert(7, "244", "WEBM [Video 480p]")
-        self.combo.insert(8, "135", "MP4 [Video 480p]")
-        self.combo.insert(9, "247", "WEBM [Video 720p]")
-        self.combo.insert(10, "136", "MP4 [Video 720p]")
-        self.combo.insert(11, "248", "WEBM [Video 1080p]")
-        self.combo.insert(12, "137", "MP4 [Video 1080p]")
-        self.combo.insert(13, "17", "3GP [Video 176x144]")
-        self.combo.insert(14, "36", "3GP [Video 320x240]")
-        self.combo.insert(15, "5", "FLV [Video 400x240]")
-        self.combo.insert(16, "43", "WEBM [Video 640x360]")
-        self.combo.insert(17, "18", "MP4 [Video 640x360]")
-        self.combo.insert(18, "22", "MP4 [Video 1280x720 High Quality]")
+        self.combo.insert(2, "160", "MP4 ["+self.l_ui[2]+" 144p]")
+        self.combo.insert(3, "242", "WEBM ["+self.l_ui[2]+" 240p]")
+        self.combo.insert(4, "133", "MP4 ["+self.l_ui[2]+" 240p]")
+        self.combo.insert(5, "243", "WEBM ["+self.l_ui[2]+" 360p]")
+        self.combo.insert(6, "134", "MP4 ["+self.l_ui[2]+" 360p]")
+        self.combo.insert(7, "244", "WEBM ["+self.l_ui[2]+" 480p]")
+        self.combo.insert(8, "135", "MP4 ["+self.l_ui[2]+" 480p]")
+        self.combo.insert(9, "247", "WEBM ["+self.l_ui[2]+" 720p]")
+        self.combo.insert(10, "136", "MP4 ["+self.l_ui[2]+" 720p]")
+        self.combo.insert(11, "248", "WEBM ["+self.l_ui[2]+" 1080p]")
+        self.combo.insert(12, "137", "MP4 ["+self.l_ui[2]+" 1080p]")
+        self.combo.insert(13, "17", "3GP ["+self.l_ui[2]+" 176x144]")
+        self.combo.insert(14, "36", "3GP ["+self.l_ui[2]+" 320x240]")
+        self.combo.insert(15, "5", "FLV ["+self.l_ui[2]+" 400x240]")
+        self.combo.insert(16, "43", "WEBM ["+self.l_ui[2]+" 640x360]")
+        self.combo.insert(17, "18", "MP4 ["+self.l_ui[2]+" 640x360]")
+        self.combo.insert(18, "22", "MP4 ["+self.l_ui[2]+" 1280x720 "+self.l_ui[4]+" "+self.l_ui[5]+"]")
         table.attach(label_format, 0, 1, 2, 3)
         table.attach(self.combo, 1, 2, 2, 3)
 
-        destination = Gtk.Button(label="Choose destination")
+        destination = Gtk.Button(label=self.l_ui[6])
         destination.connect("clicked", self.choix_destination)
         self.label_destination = Gtk.Entry()
         self.label_destination.set_text("/home/")
         table.attach(destination, 0, 1, 3, 4)
         table.attach(self.label_destination, 1, 2, 3, 4)
 
-        self.telecharger = Gtk.Button(label="Download")
+        self.telecharger = Gtk.Button(label=self.l_ui[7])
         self.telecharger.connect("clicked", self.test_format)
 
         table.attach(self.telecharger, 0, 1, 4, 5)
-        quite = Gtk.Button(label="Stop")
+        quite = Gtk.Button(label=self.l_ui[8])
         quite.connect("clicked", self.kill)
         table.attach(quite, 1, 2, 4, 5)
         vbox.pack_start(table, False, True, 0)
-        self.tw_out = Gtk.TextView()
+
+        self.tbuffer = Gtk.TextBuffer()
+        self.tw_out = Gtk.TextView(buffer=self.tbuffer)
         sw = Gtk.ScrolledWindow()
         vbox.pack_start(sw, True, True, 0)
         sw.add(self.tw_out)
         self.tw_err = Gtk.TextView()
         self.progress = Gtk.ProgressBar()
         vbox.pack_start(self.progress, False, False, 0)
+        clear = Gtk.Button(self.l_ui[9])
+        clear.connect("clicked", self.clear_log)
+        vbox.pack_start(clear,False,False,0)
+
         self.label_stat = Gtk.Label("Chiheb Nexus | http://www.nexus-coding.blogspot.com")
         vbox.pack_end(self.label_stat, False, True, 0)
+
+    def clear_log(self, widget):
+        """
+        Clear log in tw.out
+        :param widget: The widget is TextView type
+
+        """
+        self.tbuffer.set_text("")
+        self.tw_out.set_buffer(self.tbuffer)
 
     def update_progress(self):
         """
@@ -199,6 +222,7 @@ class GuiYoutube(Gtk.Window):
 
 
             """
+
             if condition is GLib.IO_HUP:
                 GLib.source_remove(self.source_id_out)
                 GLib.source_remove(self.source_id_err)
@@ -241,6 +265,7 @@ class GuiYoutube(Gtk.Window):
             self.pid = 0
 
         GLib.child_watch_add(self.pid, closure_func, None)
+        self.clear_log(self.tw_out)
 
 
     def choix_destination(self, widget):
@@ -248,7 +273,7 @@ class GuiYoutube(Gtk.Window):
         Choose save directory
         :param widget: Widget to call
         """
-        dialog = Gtk.FileChooserDialog("Choose a destination folder", self,
+        dialog = Gtk.FileChooserDialog(self.l_ui[6], self,
                                        Gtk.FileChooserAction.SELECT_FOLDER,
                                        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, "Validate", Gtk.ResponseType.OK))
         dialog.set_default_size(800, 400)
@@ -280,9 +305,9 @@ class GuiYoutube(Gtk.Window):
         :param action_group: is a Gtk.ActionGroup witch implements Gtk.Buildable
         """
 
-        action_filemenu = Gtk.Action("FichierMenu", "File", None, None)
+        action_filemenu = Gtk.Action("FichierMenu", self.l_ui[10], None, None)
         action_group.add_action(action_filemenu)
-        action_filequit = Gtk.Action("FichierQuitter", "Quit", None, None, Gtk.STOCK_QUIT)
+        action_filequit = Gtk.Action("FichierQuitter", self.l_ui[11], None, None, Gtk.STOCK_QUIT)
         action_filequit.connect("activate", self.quitter)
         action_group.add_action(action_filequit)
 
@@ -291,12 +316,12 @@ class GuiYoutube(Gtk.Window):
         Add menu help and his submenu
         Menu : Aide/_À propos + Aide/_Plus
         """
-        action_aidemenu = Gtk.Action("AideMenu", "Help", None, None)
+        action_aidemenu = Gtk.Action("AideMenu", self.l_ui[11], None, None)
         action_group.add_action(action_aidemenu)
-        action_aidepropos = Gtk.Action("AideApropos", "About", None, None, propos)
+        action_aidepropos = Gtk.Action("AideApropos", self.l_ui[12], None, None, propos)
         action_aidepropos.connect("activate", propos)
         action_group.add_action(action_aidepropos)
-        action_aideplus = Gtk.Action("AidePlus", "Bug", None, None, None)
+        action_aideplus = Gtk.Action("AidePlus", self.l_ui[13], None, None, None)
         action_aideplus.connect("activate", self.plus)
         action_group.add_action(action_aideplus)
 
@@ -312,8 +337,8 @@ class GuiYoutube(Gtk.Window):
         :param widget: widget to call
         """
         info = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-                                 'To report Bug or for more information : ')
-        info.format_secondary_text('Visit Github : https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui')
+                                 self.l_ui[16])
+        info.format_secondary_text(self.l_ui[17]+' Github : https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui')
         info.run()
         info.destroy()
 
@@ -323,8 +348,7 @@ class GuiYoutube(Gtk.Window):
         :return : process() or info_user()
         :param widget: widget to call
         """
-        info = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-                                 'Enter a valid video format')
+        info = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, self.l_ui[18])
         info.run()
         info.destroy()
 
@@ -387,7 +411,7 @@ class DialogQuit(Gtk.Dialog):
         Gtk.Dialog.__init__(self, "Quitter", parent, 0, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK,
                                                          Gtk.ResponseType.OK))
         self.set_default_size(300, 300)
-        label = Gtk.Label("\nYou really want to leave ?\n\n\n\n")
+        label = Gtk.Label("\n"+GuiYoutube.l_ui[15]+"\n\n\n\n")
         image = Gtk.Image()
         image.set_from_file("images/quit.png")
 

@@ -54,6 +54,9 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
    * Fenêtre de taille fixe
    * VBox homogène
    * Traduction de la Gui en anglais
+**11/11/2014** 
+**Update** :
+   * Ajout d'une interface de choix de langue (Français et anglais)
    
 #TODO :
    - [ ]  Ajout des options d'authentification
@@ -61,9 +64,10 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
    - [ ]  Lister toutes les formats disponible de la vidéo à télécharger
    - [ ]  Afficher la version de youtube-dl installée
    - [ ]  Ajouter l'option de mettre à jour youtube-dl
-   - [ ]  Choix de la langue de l'interface dès son exécution 
+   - [x]  Choix de la langue de l'interface dès son exécution 
 
 #Bugs 
 Veuillez notez les bugs sur https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui
 
+![alt tag](http://2.bp.blogspot.com/-lOQ907T6HR4/VGJrl8iqP-I/AAAAAAAAAwk/UjrrIEGQoRs/s1600/S%C3%A9lection_001.png)
 ![alt tag](http://1.bp.blogspot.com/-xaSIzhFyk3I/VF-iIVwV_vI/AAAAAAAAAwU/v2m2DDbO6XQ/s1600/S%C3%A9lection_002.png)
