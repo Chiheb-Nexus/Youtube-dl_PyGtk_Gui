@@ -23,8 +23,10 @@
 ############################ Main Gui ##########################################
 
 import os
+import getpass
 import signal
 from langue_gui import *
+from version import *
 from gi.repository import Gtk, GLib, GdkPixbuf, Gdk
 
 
@@ -46,6 +48,7 @@ class GuiYoutube(Gtk.Window):
             self.l_ui = ui_an
             GuiYoutube.l_ui = ui_an
 
+        #self.set_decorated(0) # remove decoration from window
         self.set_resizable(False)
         self.set_size_request(360, 500)
         #self.set_default_size(500, 500)
@@ -60,13 +63,15 @@ class GuiYoutube(Gtk.Window):
         self.ui_file = os.getcwd() + "/gui_menu.xml"
         uimanager = self.create_ui_manager
         uimanager.insert_action_group(action_group)
-
         menubar = uimanager.get_widget("/MenuBar")
+
         vbox = Gtk.VBox(False, 2)
         self.add(vbox)
         vbox.pack_start(menubar, False, False, 0)
 
+        notebook = Gtk.Notebook()
         table = Gtk.Table(2, 2, True)
+        notebook.append_page(table,Gtk.Label(self.l_ui[19]))
 
         self.label = Gtk.Label()
         self.label.set_text(self.l_ui[0])
@@ -103,7 +108,8 @@ class GuiYoutube(Gtk.Window):
         destination = Gtk.Button(label=self.l_ui[6])
         destination.connect("clicked", self.choix_destination)
         self.label_destination = Gtk.Entry()
-        self.label_destination.set_text("/home/")
+        username = getpass.getuser()
+        self.label_destination.set_text("/home/"+username)
         table.attach(destination, 0, 1, 3, 4)
         table.attach(self.label_destination, 1, 2, 3, 4)
 
@@ -114,7 +120,8 @@ class GuiYoutube(Gtk.Window):
         quite = Gtk.Button(label=self.l_ui[8])
         quite.connect("clicked", self.kill)
         table.attach(quite, 1, 2, 4, 5)
-        vbox.pack_start(table, False, True, 0)
+        
+        vbox.pack_start(notebook,False,False,0)
 
         self.tbuffer = Gtk.TextBuffer()
         self.tw_out = Gtk.TextView(buffer=self.tbuffer)
@@ -129,12 +136,20 @@ class GuiYoutube(Gtk.Window):
         vbox.pack_start(clear,False,False,0)
 
         self.label_stat = Gtk.Label("Chiheb Nexus | http://www.nexus-coding.blogspot.com")
+        label_version = Gtk.Label()
+        try:
+            txt = version()
+            label_version.set_text(self.l_ui[20]+txt)
+        except:
+            label_version.set_text("youtube-dl n'est pas installé")
+
         vbox.pack_end(self.label_stat, False, True, 0)
+        vbox.pack_end(label_version, False, True, 0)
 
     def clear_log(self, widget):
         """
         Clear log in tw.out
-        :param widget: The widget is TextView type
+        :param widget: The widget is a TextView 
 
         """
         self.tbuffer.set_text("")
@@ -316,12 +331,12 @@ class GuiYoutube(Gtk.Window):
         Add menu help and his submenu
         Menu : Aide/_À propos + Aide/_Plus
         """
-        action_aidemenu = Gtk.Action("AideMenu", self.l_ui[11], None, None)
+        action_aidemenu = Gtk.Action("AideMenu", self.l_ui[12], None, None)
         action_group.add_action(action_aidemenu)
-        action_aidepropos = Gtk.Action("AideApropos", self.l_ui[12], None, None, propos)
+        action_aidepropos = Gtk.Action("AideApropos", self.l_ui[13], None, None, propos)
         action_aidepropos.connect("activate", propos)
         action_group.add_action(action_aidepropos)
-        action_aideplus = Gtk.Action("AidePlus", self.l_ui[13], None, None, None)
+        action_aideplus = Gtk.Action("AidePlus", self.l_ui[14], None, None, None)
         action_aideplus.connect("activate", self.plus)
         action_group.add_action(action_aideplus)
 
@@ -371,7 +386,7 @@ def propos(widget):
     """
     about = Gtk.AboutDialog()
     about.set_program_name("Youtube-dl PyGtk")
-    about.set_version("<b>Version :</b> 0.0.3")
+    about.set_version("<b>Version :</b> 0.0.4")
     about.set_copyright('Chiheb NeXus© - 2014')
     about.set_comments("This program is a frontend Gui of the popular youtube-dl script created with PyGtk3")
     about.set_website("http://www.nexus-coding.blogspot.com")

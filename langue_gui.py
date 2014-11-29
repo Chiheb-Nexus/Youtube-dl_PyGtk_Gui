@@ -28,11 +28,13 @@ __author__ = 'nexus'
 ui_fr = ["Entrez l'URL de la vidéo Youtube", "http://www.youtube.com/La_Vidéo", "Vidéo", "Basse",
          "Haute", "Qualité", "Choisir la destination", "Télécharger", "Stopper", "Effacer le log",
           "Fichier", "Quitter", "Aide", "À propos", "Bug", "Vous voulez vraiment quitter ?",
-         "Pour réporter un Bug ou pous plus d'information", "Visitez", "Enter une format valide"]
+         "Pour réporter un Bug ou pous plus d'information", "Visitez", "Enter une format valide", "Télécharger",
+         "La version de youtube-dl installée est : "]
 ui_an = ["Enter Youtube video URL", "http://www.youtube.com/Put_Your_Video", "Video", "Bad",
          "High", "Quality", "Choose destination", "Download", "Stop", "Clear log", "File",
          "Quit", "Help", "About", "Bug", "You really want to leave ?",
-          "To report Bug or for more information :", "Visit", "Enter a valid video format"]
+          "To report Bug or for more information :", "Visit", "Enter a valid video format", "Download", ""
+          "youtube-dl installed version is : "]
 
 from langue_gui import *
 from gi.repository import Gtk, GLib, GdkPixbuf, Gdk

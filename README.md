@@ -62,7 +62,7 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
    - [ ]  Ajout des options d'authentification
    - [ ]  Ajout des options de sous-titrage (subtitles)
    - [ ]  Lister toutes les formats disponible de la vidéo à télécharger
-   - [ ]  Afficher la version de youtube-dl installée
+   - [x]  Afficher la version de youtube-dl installée
    - [ ]  Ajouter l'option de mettre à jour youtube-dl
    - [x]  Choix de la langue de l'interface dès son exécution 
 
