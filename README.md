@@ -2,18 +2,17 @@
 
 #Installation 
 Pour lancer le programme, tapez sur vos console : 
-                              ~$ python3 main_gui.py 
+             ~$ python3 main_gui.py 
 
 Avant l'exécution de "Youtube-dl PyGtk Gui" Veuillez installer youtube-dl sur votre ordinateur : 
 
  - Ubuntu : 
-   ~$ sudo apt-get update
-   ~$ sudo apt-get install youtube-dl
+             ~$ sudo apt-get update
+             ~$ sudo apt-get install youtube-dl
 
- - Installation manuelle : 
- 
-    ~$ sudo curl https://yt-dl.org/downloads/2014.10.15/youtube-dl -o /usr/local/bin/youtube-dl
-    ~$ sudo chmod a+x /usr/local/bin/youtube-dl
+ - Installation manuelle :
+            ~$ sudo curl https://yt-dl.org/downloads/2014.10.15/youtube-dl -o /usr/local/bin/youtube-dl
+            ~$ sudo chmod a+x /usr/local/bin/youtube-dl
 
 Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
 
