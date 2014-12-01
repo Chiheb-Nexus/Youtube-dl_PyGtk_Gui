@@ -27,6 +27,8 @@ import getpass
 import signal
 from langue_gui import *
 from version import *
+from update import *
+from authentification import *
 from gi.repository import Gtk, GLib, GdkPixbuf, Gdk
 
 
@@ -47,7 +49,7 @@ class GuiYoutube(Gtk.Window):
         if self.l_ui =="" : 
             self.l_ui = ui_an
             GuiYoutube.l_ui = ui_an
-
+            
         #self.set_decorated(0) # remove decoration from window
         self.set_resizable(False)
         self.set_size_request(360, 500)
@@ -70,8 +72,10 @@ class GuiYoutube(Gtk.Window):
         vbox.pack_start(menubar, False, False, 0)
 
         notebook = Gtk.Notebook()
+        
         table = Gtk.Table(2, 2, True)
         notebook.append_page(table,Gtk.Label(self.l_ui[19]))
+
 
         self.label = Gtk.Label()
         self.label.set_text(self.l_ui[0])
@@ -114,7 +118,7 @@ class GuiYoutube(Gtk.Window):
         table.attach(self.label_destination, 1, 2, 3, 4)
 
         self.telecharger = Gtk.Button(label=self.l_ui[7])
-        self.telecharger.connect("clicked", self.test_format)
+        self.telecharger.connect("clicked", self.test_format,"down")
 
         table.attach(self.telecharger, 0, 1, 4, 5)
         quite = Gtk.Button(label=self.l_ui[8])
@@ -125,6 +129,7 @@ class GuiYoutube(Gtk.Window):
 
         self.tbuffer = Gtk.TextBuffer()
         self.tw_out = Gtk.TextView(buffer=self.tbuffer)
+        self.tw_out.set_editable(False)
         sw = Gtk.ScrolledWindow()
         vbox.pack_start(sw, True, True, 0)
         sw.add(self.tw_out)
@@ -145,6 +150,9 @@ class GuiYoutube(Gtk.Window):
 
         vbox.pack_end(self.label_stat, False, True, 0)
         vbox.pack_end(label_version, False, True, 0)
+        notebook.insert_page(auth(self),Gtk.Label("Authentification"),2)
+        notebook.insert_page(update_youtube(self),Gtk.Label("Update"),3)
+        
 
     def clear_log(self, widget):
         """
@@ -172,7 +180,7 @@ class GuiYoutube(Gtk.Window):
             os.kill(self.pid, signal.SIGTERM)
             self.pid = 0
 
-    def process(self, widget):
+    def process(self, widget,operator):
 
         """
         Download method
@@ -181,11 +189,20 @@ class GuiYoutube(Gtk.Window):
         chemin : Save directory
         params : take url & format contents
         """
-        chemin = self.label_destination.get_text()
-        os.chdir(chemin)
-        url = self.entree.get_text()
-        formats = self.combo.get_active_id()
-        params = ['youtube-dl', '-f', formats, url]
+        if operator == "down":
+            chemin = self.label_destination.get_text()
+            os.chdir(chemin)
+            url = self.entree.get_text()
+            formats = self.combo.get_active_id()
+            params = ['youtube-dl', '-f', formats, url]
+        if operator == "upd":
+            params = ['youtube-dl','-U']
+        if operator == "auth":
+            url = auth.link_entry.get_text()
+            _user_name = auth.user.get_text()
+            _user_pass = auth.pwd.get_text()
+            print(_user_pass,_user_name)
+            params = ['youtube-dl','-u',_user_name,'-p',_user_pass,url]
 
         def scroll_to_end(textview):
             """
@@ -296,6 +313,7 @@ class GuiYoutube(Gtk.Window):
 
         if response == Gtk.ResponseType.OK:
             self.label_destination.set_text(dialog.get_filename())
+            auth.dest_entry.set_text(dialog.get_filename())
             dialog.destroy()
 
         if response == Gtk.ResponseType.CANCEL:
@@ -367,14 +385,14 @@ class GuiYoutube(Gtk.Window):
         info.run()
         info.destroy()
 
-    def test_format(self, widget):
+    def test_format(self, widget,operator):
         """
         Test input format
         :param widget: widget to call
         """
         f = self.combo.get_active_id()
         if f:
-            self.process(self)
+            self.process(self,operator)
         else:
             self.info_user(self)
 
@@ -386,7 +404,7 @@ def propos(widget):
     """
     about = Gtk.AboutDialog()
     about.set_program_name("Youtube-dl PyGtk")
-    about.set_version("<b>Version :</b> 0.0.4")
+    about.set_version("<b>Version :</b> 0.0.5")
     about.set_copyright('Chiheb NeXus© - 2014')
     about.set_comments("This program is a frontend Gui of the popular youtube-dl script created with PyGtk3")
     about.set_website("http://www.nexus-coding.blogspot.com")

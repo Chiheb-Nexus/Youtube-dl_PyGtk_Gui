@@ -25,7 +25,7 @@
 __author__ = 'nexus'
 
 
-ui_fr = ["Entrez l'URL de la vidéo Youtube", "http://www.youtube.com/La_Vidéo", "Vidéo", "Basse",
+ui_fr = ["Entrez l'URL de la vidéo Youtube", "http://www.youtube.com/La_Video", "Vidéo", "Basse",
          "Haute", "Qualité", "Choisir la destination", "Télécharger", "Stopper", "Effacer le log",
           "Fichier", "Quitter", "Aide", "À propos", "Bug", "Vous voulez vraiment quitter ?",
          "Pour réporter un Bug ou pous plus d'information", "Visitez", "Enter une format valide", "Télécharger",

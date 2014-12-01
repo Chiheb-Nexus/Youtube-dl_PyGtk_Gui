@@ -7,14 +7,13 @@ Pour lancer le programme, tapez sur vos console :
 Avant l'exécution de "Youtube-dl PyGtk Gui" Veuillez installer youtube-dl sur votre ordinateur : 
 
  - Ubuntu : 
-            ~$ sudo apt-get update
-            ~$ sudo apt-get install youtube-dl
+   ~$ sudo apt-get update
+   ~$ sudo apt-get install youtube-dl
 
  - Installation manuelle : 
  
-                           ~$ sudo curl https://yt-dl.org/downloads/2014.10.15/youtube-dl -o /usr/local/bin/youtube-dl
-
-                           ~$ sudo chmod a+x /usr/local/bin/youtube-dl
+    ~$ sudo curl https://yt-dl.org/downloads/2014.10.15/youtube-dl -o /usr/local/bin/youtube-dl
+    ~$ sudo chmod a+x /usr/local/bin/youtube-dl
 
 Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
 
@@ -59,15 +58,15 @@ Veuillez noter que youtube-dl ainsi Youtube-dl Pygtk Gui dépendent de python 3.
    * Ajout d'une interface de choix de langue (Français et anglais)
    
 #TODO :
-   - [ ]  Ajout des options d'authentification
+   - [x]  Ajout des options d'authentification
    - [ ]  Ajout des options de sous-titrage (subtitles)
-   - [ ]  Lister toutes les formats disponible de la vidéo à télécharger
+   - [ ]  Lister tous les formats disponible de la vidéo à télécharger
    - [x]  Afficher la version de youtube-dl installée
-   - [ ]  Ajouter l'option de mettre à jour youtube-dl
+   - [x]  Ajouter l'option de mettre à jour youtube-dl
    - [x]  Choix de la langue de l'interface dès son exécution 
 
 #Bugs 
 Veuillez notez les bugs sur https://github.com/Chiheb-Nexus/Youtube-dl_PyGtk_Gui
 
 ![alt tag](http://2.bp.blogspot.com/-lOQ907T6HR4/VGJrl8iqP-I/AAAAAAAAAwk/UjrrIEGQoRs/s1600/S%C3%A9lection_001.png)
-![alt tag](http://1.bp.blogspot.com/-xaSIzhFyk3I/VF-iIVwV_vI/AAAAAAAAAwU/v2m2DDbO6XQ/s1600/S%C3%A9lection_002.png)
+![alt tag](http://4.bp.blogspot.com/-5PQqkKWkiAs/VHvvldhKvLI/AAAAAAAAA14/ubsbTNZmtNk/s1600/S%C3%A9lection_007.png)
