@@ -199,14 +199,14 @@ class GuiYoutube(Gtk.Window):
             params = ['youtube-dl','-U']
         if operator == "auth":
             url = auth.link_entry.get_text()
-            _user_name = auth.user.get_text()
+            user_name = auth.user.get_text()
             _user_pass = auth.pwd.get_text()
-        if _user_name !="" and _user_pass !="":
-            chemin = auth.dest_entry.get_text()
-            os.chdir(chemin)
-            params = ['youtube-dl','-u',_user_name,'-p',_user_pass,url]
-        if _user_pass == "" or _user_pass =="":
-            params = ['youtube-dl','-f','mp4',url]
+            if _user_name !="" and _user_pass !="":
+                chemin = auth.dest_entry.get_text()
+                os.chdir(chemin)
+                params = ['youtube-dl','-u',_user_name,'-p',_user_pass,url]
+            if _user_pass == "" or _user_pass =="":
+                params = ['youtube-dl','-f','mp4',url] # TODO : Error msg
 
 
         def scroll_to_end(textview):

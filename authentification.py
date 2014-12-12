@@ -56,10 +56,10 @@ def auth(self):
 	table.attach(auth.pwd, 1,2,2,3,Gtk.AttachOptions.SHRINK,Gtk.AttachOptions.SHRINK)
 	table.attach(link_label,0,1,3,4,Gtk.AttachOptions.SHRINK,Gtk.AttachOptions.SHRINK)
 	table.attach(auth.link_entry,1,2,3,4)
-	table.attach(dest_button,0,1,5,6)
-	table.attach(auth.dest_entry,1,2,5,6)
-	table.attach(valid,0,1,6,7,Gtk.AttachOptions.FILL,Gtk.AttachOptions.SHRINK)
-	table.attach(stop,1,2,6,7,Gtk.AttachOptions.FILL,Gtk.AttachOptions.SHRINK)
+	table.attach(dest_button,0,1,4,5)
+	table.attach(auth.dest_entry,1,2,4,5)
+	table.attach(valid,0,1,5,6,Gtk.AttachOptions.FILL,Gtk.AttachOptions.FILL)
+	table.attach(stop,1,2,5,6,Gtk.AttachOptions.FILL,Gtk.AttachOptions.FILL)
 
 	return table
 
